@@ -81,6 +81,11 @@ dependencies {
     implementation(Libs.hilt_common)
     kapt(Libs.hilt_compiler)
 
+    implementation(Libs.retrofit)
+    implementation(Libs.retrofit_converter)
+    implementation(Libs.okhttp3)
+    implementation(Libs.okhttp3_interceptor)
+
     implementation(Libs.timber)
 }
 

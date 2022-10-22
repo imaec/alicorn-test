@@ -3,12 +3,19 @@ package com.imaec.alicorntest.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.imaec.alicorntest.model.ChatListVo
+import com.imaec.alicorntest.model.ChatListVo.Companion.dtoToVo
+import com.imaec.domain.successOr
+import com.imaec.domain.usecase.GetChatListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val getChatListUseCase: GetChatListUseCase
+) : ViewModel() {
 
     private val _state = MutableLiveData<MainState>()
     val state: LiveData<MainState> get() = _state
@@ -17,43 +24,9 @@ class MainViewModel @Inject constructor() : ViewModel() {
     val chatList: LiveData<List<ChatListVo>> get() = _chatList
 
     fun fetchData() {
-        _chatList.value = listOf(
-            ChatListVo(
-                profile = "",
-                name = "김이름",
-                time = "오후 12:38",
-                message = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
-                unread = "0"
-            ),
-            ChatListVo(
-                profile = "",
-                name = "김이름",
-                time = "오후 12:38",
-                message = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
-                unread = "0"
-            ),
-            ChatListVo(
-                profile = "",
-                name = "김이름",
-                time = "오후 12:38",
-                message = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
-                unread = "0"
-            ),
-            ChatListVo(
-                profile = "",
-                name = "김이름",
-                time = "오후 12:38",
-                message = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
-                unread = "0"
-            ),
-            ChatListVo(
-                profile = "",
-                name = "김이름",
-                time = "오후 12:38",
-                message = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
-                unread = "0"
-            )
-        )
+        viewModelScope.launch {
+            _chatList.value = getChatListUseCase("test").successOr(emptyList()).map(::dtoToVo)
+        }
     }
 
     fun onClickChat(item: ChatListVo) {

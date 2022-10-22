@@ -27,6 +27,11 @@ object Versions {
     const val dagger_hilt = "2.38.1"
     const val hilt = "1.0.0"
 
+    const val retrofit = "2.9.0"
+    const val okhttp3 = "4.9.1"
+
+    const val glide = "4.12.0"
+
     const val timber = "4.7.1"
 
     const val junit = "4.13.1"
@@ -54,6 +59,14 @@ object Libs {
     const val dagger_hilt_compiler = "com.google.dagger:hilt-android-compiler:${Versions.dagger_hilt}"
     const val hilt_common = "androidx.hilt:hilt-common:${Versions.hilt}"
     const val hilt_compiler = "androidx.hilt:hilt-compiler:${Versions.hilt}"
+    // Retrofit
+    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    const val retrofit_converter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    const val okhttp3 = "com.squareup.okhttp3:okhttp:${Versions.okhttp3}"
+    const val okhttp3_interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp3}"
+    // Glide
+    const val glide_core = "com.github.bumptech.glide:glide:${Versions.glide}"
+    const val glide_compiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
     // Timber
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 }

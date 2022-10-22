@@ -55,5 +55,7 @@ dependencies {
     implementation(Libs.hilt_common)
     kapt(Libs.hilt_compiler)
 
+    implementation(Libs.retrofit)
+
     implementation(Libs.timber)
 }
