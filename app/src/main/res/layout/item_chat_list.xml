@@ -6,11 +6,16 @@
     <data>
 
         <variable
+            name="vm"
+            type="com.imaec.alicorntest.ui.main.MainViewModel" />
+
+        <variable
             name="item"
             type="com.imaec.alicorntest.model.ChatListVo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        bindSingleClick="@{() -> vm.onClickChat(item)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp">
@@ -69,7 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{item.content}"
+            android:text="@{item.message}"
             android:textColor="@color/black"
             android:lines="1"
             android:ellipsize="end"

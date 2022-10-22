@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.imaec.alicorntest.ui.chat.ChatViewModel" />
+
+        <variable
+            name="item"
+            type="com.imaec.alicorntest.model.ChatVo" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_receive"
+            bindVisible="@{!item.my}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@drawable/bubble_receive"
+            android:gravity="center_vertical"
+            android:text="@{item.message}"
+            android:textColor="@color/black"
+            app:layout_constraintWidth_max="250dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12312"/>
+
+        <TextView
+            bindVisible="@{!item.my}"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@{item.time}"
+            app:layout_constraintStart_toEndOf="@id/tv_receive"
+            app:layout_constraintBottom_toBottomOf="@id/tv_receive"
+            tools:text="오전 10:23"/>
+
+        <TextView
+            android:id="@+id/tv_my"
+            bindVisible="@{item.my}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@drawable/bubble_my"
+            android:gravity="center_vertical"
+            android:text="@{item.message}"
+            android:textColor="@color/white"
+            app:layout_constraintWidth_max="250dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12312"/>
+
+        <TextView
+            bindVisible="@{item.my}"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@{item.time}"
+            app:layout_constraintEnd_toStartOf="@id/tv_my"
+            app:layout_constraintBottom_toBottomOf="@id/tv_my"
+            tools:text="오전 10:23"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

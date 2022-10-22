@@ -10,6 +10,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel() {
 
+    private val _state = MutableLiveData<MainState>()
+    val state: LiveData<MainState> get() = _state
+
     private val _chatList = MutableLiveData<List<ChatListVo>>()
     val chatList: LiveData<List<ChatListVo>> get() = _chatList
 
@@ -19,37 +22,41 @@ class MainViewModel @Inject constructor() : ViewModel() {
                 profile = "",
                 name = "김이름",
                 time = "오후 12:38",
-                content = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
+                message = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
                 unread = "0"
             ),
             ChatListVo(
                 profile = "",
                 name = "김이름",
                 time = "오후 12:38",
-                content = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
+                message = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
                 unread = "0"
             ),
             ChatListVo(
                 profile = "",
                 name = "김이름",
                 time = "오후 12:38",
-                content = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
+                message = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
                 unread = "0"
             ),
             ChatListVo(
                 profile = "",
                 name = "김이름",
                 time = "오후 12:38",
-                content = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
+                message = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
                 unread = "0"
             ),
             ChatListVo(
                 profile = "",
                 name = "김이름",
                 time = "오후 12:38",
-                content = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
+                message = "안녕하세요. 김이름님 잘 지내셨나요. 오랜만입니다.",
                 unread = "0"
             )
         )
+    }
+
+    fun onClickChat(item: ChatListVo) {
+        _state.value = MainState.OnClickChat(item)
     }
 }

@@ -1,6 +1,5 @@
-package com.imaec.alicorntest.ui.main
+package com.imaec.alicorntest.ui.chat
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.DiffUtil
@@ -9,15 +8,16 @@ import com.imaec.alicorntest.BR
 import com.imaec.alicorntest.R
 import com.imaec.alicorntest.base.BaseActivity
 import com.imaec.alicorntest.base.BaseSingleViewAdapter
-import com.imaec.alicorntest.databinding.ActivityMainBinding
-import com.imaec.alicorntest.model.ChatListVo
-import com.imaec.alicorntest.ui.chat.ChatActivity
+import com.imaec.alicorntest.common.KeyboardVisibilityUtils
+import com.imaec.alicorntest.databinding.ActivityChatBinding
+import com.imaec.alicorntest.model.ChatVo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat) {
 
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<ChatViewModel>()
+    private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         setupBinding()
         setupRecyclerView()
         setupData()
+        setupListener()
         setupObserver()
+    }
+
+    override fun onDestroy() {
+        keyboardVisibilityUtils.detachKeyboardListeners()
+        super.onDestroy()
     }
 
     private fun setupBinding() {
@@ -33,12 +39,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun setupRecyclerView() {
-        with(binding.rvChatList) {
-            val diffUtil = object : DiffUtil.ItemCallback<ChatListVo>() {
-                override fun areItemsTheSame(oldItem: ChatListVo, newItem: ChatListVo): Boolean =
+        with(binding.rvChat) {
+            val diffUtil = object : DiffUtil.ItemCallback<ChatVo>() {
+                override fun areItemsTheSame(oldItem: ChatVo, newItem: ChatVo): Boolean =
                     oldItem == newItem
 
-                override fun areContentsTheSame(oldItem: ChatListVo, newItem: ChatListVo): Boolean =
+                override fun areContentsTheSame(oldItem: ChatVo, newItem: ChatVo): Boolean =
                     oldItem == newItem
             }
 
@@ -48,7 +54,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
 
             adapter = BaseSingleViewAdapter(
-                layoutResId = R.layout.item_chat_list,
+                layoutResId = R.layout.item_chat,
                 bindingItemId = BR.item,
                 viewModel = mapOf(BR.vm to viewModel),
                 diffUtil = diffUtil
@@ -60,13 +66,26 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         viewModel.fetchData()
     }
 
+    private fun setupListener() {
+        keyboardVisibilityUtils = KeyboardVisibilityUtils(
+            window,
+            onShowKeyboard = {
+                scrollToBottom()
+            }
+        )
+    }
+
     private fun setupObserver() {
         viewModel.state.observe(this) {
             when (it) {
-                is MainState.OnClickChat -> {
-                    startActivity(Intent(this, ChatActivity::class.java))
-                }
+                ChatState.OnDataLoaded -> scrollToBottom()
             }
+        }
+    }
+
+    private fun scrollToBottom() {
+        binding.rvChat.adapter?.itemCount?.let { itemCount ->
+            binding.rvChat.scrollToPosition(itemCount - 1)
         }
     }
 }

@@ -4,6 +4,6 @@ data class ChatListVo(
     val profile: String,
     val name: String,
     val time: String,
-    val content: String,
+    val message: String,
     val unread: String
 )
