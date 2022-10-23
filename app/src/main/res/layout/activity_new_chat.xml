@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.imaec.alicorntest.ui.newchat.NewChatViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mtb_new_chat"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
+            app:title="새 메시지"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <EditText
+            android:id="@+id/et_receiver"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:text="@={vm.receiver}"
+            android:hint="받는 사람"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintTop_toBottomOf="@id/mtb_new_chat"/>
+
+        <TextView
+            android:id="@+id/tv_connected_people_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="연결된 사람"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/et_receiver"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_connected_people"
+            bindItemList="@{vm.connectedPeopleList}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintTop_toBottomOf="@id/tv_connected_people_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/item_connected_people"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

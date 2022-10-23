@@ -16,6 +16,7 @@ import com.imaec.alicorntest.databinding.ActivityMainBinding
 import com.imaec.alicorntest.model.ChatListVo
 import com.imaec.alicorntest.ui.chat.ChatActivity
 import com.imaec.alicorntest.ui.login.LoginActivity
+import com.imaec.alicorntest.ui.newchat.NewChatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -69,7 +70,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         binding.mtbMain.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menu_new -> {
-                    Toast.makeText(this, "new message", Toast.LENGTH_SHORT).show()
+                    activityResultRegistry.register(
+                        "NEW_CHAT",
+                        ActivityResultContracts.StartActivityForResult()
+                    ) { result ->
+                        if (result.resultCode == RESULT_OK) {
+                            setupData()
+                        }
+                    }.launch(Intent(this, NewChatActivity::class.java))
                     true
                 }
                 R.id.menu_logout -> {
