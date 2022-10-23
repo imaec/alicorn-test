@@ -1,6 +1,5 @@
 package com.imaec.domain.usecase
 
-import com.imaec.domain.model.ChatDto
 import com.imaec.domain.repository.SocketRepository
 import com.imaec.domain.repository.StompSocketListener
 import javax.inject.Inject
@@ -9,7 +8,7 @@ class SocketUseCase @Inject constructor(
     private val socketRepository: SocketRepository
 ) {
 
-    fun connect(destination: String, listener: StompSocketListener<ChatDto>) {
+    fun <T> connect(destination: String, listener: StompSocketListener<T>) {
         socketRepository.connect(destination, listener)
     }
 

@@ -2,6 +2,7 @@ package com.imaec.alicorntest.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DiffUtil
@@ -69,6 +70,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                         Intent(this, ChatActivity::class.java),
                         bundleOf("chatId" to it.item.chatId)
                     )
+                }
+                is MainState.ShowToast -> {
+                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }

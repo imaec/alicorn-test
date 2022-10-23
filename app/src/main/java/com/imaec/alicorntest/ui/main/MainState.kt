@@ -5,4 +5,5 @@ import com.imaec.alicorntest.model.ChatListVo
 sealed class MainState {
 
     data class OnClickChat(val item: ChatListVo) : MainState()
+    data class ShowToast(val message: String) : MainState()
 }
