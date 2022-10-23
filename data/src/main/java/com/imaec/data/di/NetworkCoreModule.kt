@@ -1,14 +1,18 @@
 package com.imaec.data.di
 
+import android.accounts.AccountManager
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import com.imaec.data.BuildConfig
+import com.imaec.data.api.AlicornMemberService
 import com.imaec.data.api.AlicornService
 import com.imaec.data.api.MockDataManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -24,6 +28,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkCoreModule {
+
+    @Provides
+    @Singleton
+    fun provideAccountManager(@ApplicationContext context: Context): AccountManager =
+        AccountManager.get(context)
 
     @Provides
     @Singleton
@@ -95,6 +104,12 @@ object NetworkCoreModule {
     fun provideAlicornService(
         retrofitBuilder: Retrofit.Builder
     ): AlicornService = retrofitBuilder.build().create(AlicornService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAlicornMemberService(
+        retrofitBuilder: Retrofit.Builder
+    ): AlicornMemberService = retrofitBuilder.build().create(AlicornMemberService::class.java)
 
     @Provides
     @Singleton

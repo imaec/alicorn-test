@@ -1,14 +1,17 @@
 package com.imaec.data.api
 
 import com.google.gson.Gson
+import com.imaec.data.api.body.LoginBody
 import com.imaec.data.entity.ChatEntity
 import com.imaec.data.entity.ChatListEntity
 import com.imaec.data.entity.ChatListResponseEntity
 import com.imaec.data.entity.ChatResponseEntity
+import com.imaec.data.entity.LoginEntity
 import okhttp3.Interceptor
 import okhttp3.Protocol
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
+import okio.Buffer
 
 object MockDataManager {
 
@@ -16,19 +19,47 @@ object MockDataManager {
         return when (chain.request().url.encodedPath) {
             "/fake/chat/list" -> getResponse(chain, Gson().toJson(ChatListResponseEntity(chatList)))
             "/fake/chat" -> getResponse(chain, Gson().toJson(ChatResponseEntity(chat)))
+            "/fake/member/login" -> fakeLogin(chain)
             else -> chain.proceed(chain.request())
         }
     }
 
-    private fun getResponse(chain: Interceptor.Chain, response: String) = Response.Builder()
+    private fun getResponse(chain: Interceptor.Chain, response: String?) = Response.Builder()
         .protocol(Protocol.HTTP_1_1)
         .addHeader("content-type", "application/json")
         .request(chain.request())
-        .message(response)
+        .message(response ?: "")
         .code(200)
-        .body(response.toResponseBody())
+        .body(response?.toResponseBody())
         .build()
+
+    private fun fakeLogin(chain: Interceptor.Chain): Response {
+        val buffer = Buffer()
+        chain.request().body?.writeTo(buffer)
+        val body = Gson().fromJson(buffer.readUtf8(), LoginBody::class.java)
+        val id = body.id
+        val password = body.password
+
+        return getResponse(
+            chain,
+            Gson().toJson(
+                LoginEntity(
+                    members.firstOrNull {
+                        id == it.second && password == it.third
+                    }?.first
+                )
+            )
+        )
+    }
 }
+
+val members = listOf(
+    Triple("0", "kim", "1234"),
+    Triple("1", "lee", "1234"),
+    Triple("2", "kang", "1212"),
+    Triple("3", "park", "4321"),
+    Triple("4", "kim2", "1111")
+)
 
 val chatList = listOf(
     ChatListEntity(
@@ -130,7 +161,7 @@ val chat = listOf(
         isMy = false
     ),
     ChatEntity(
-        message = "아 죄송해요, 이제야 메세지를 봤습니다. 저도 반가웠습니다! 어떤 부탁인가요?",
+        message = "아 죄송해요, 이제야 메세지를 봤습니다. 저도 반가웠습니다! 어떤 부탁인가요? https://www.naver.com/",
         time = "오전 11:27",
         isMy = true
     )

@@ -66,9 +66,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         viewModel.state.observe(this) {
             when (it) {
                 is MainState.OnClickChat -> {
-                    startActivity(Intent(this, ChatActivity::class.java).apply {
-                        putExtras(bundleOf("chatId" to it.item.chatId, "name" to it.item.name))
-                    })
+                    startActivity(
+                        Intent(this, ChatActivity::class.java).apply {
+                            putExtras(bundleOf("chatId" to it.item.chatId, "name" to it.item.name))
+                        }
+                    )
                 }
                 is MainState.ShowToast -> {
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
