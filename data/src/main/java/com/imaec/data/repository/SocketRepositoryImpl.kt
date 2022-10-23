@@ -1,5 +1,7 @@
 package com.imaec.data.repository
 
+import com.google.gson.Gson
+import com.imaec.domain.model.ChatDto
 import com.imaec.domain.repository.SocketRepository
 import com.imaec.domain.repository.StompSocketListener
 import io.reactivex.disposables.CompositeDisposable
@@ -13,18 +15,15 @@ class SocketRepositoryImpl(
 
     private val disposable = CompositeDisposable()
 
-    override fun connect(chatId: String, listener: StompSocketListener) {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T> connect(destination: String, listener: StompSocketListener<T>) {
         with(stompClient) {
             connect()
             lifecycle().subscribe(
                 { lifeCycleEvent ->
                     when (lifeCycleEvent.type) {
-                        LifecycleEvent.Type.OPENED -> {
-                            listener.onOpen()
-                        }
                         LifecycleEvent.Type.CLOSED -> {
                             disposable.clear()
-                            listener.onClose()
                         }
                         LifecycleEvent.Type.ERROR -> {
                             listener.onError(lifeCycleEvent.exception)
@@ -36,9 +35,14 @@ class SocketRepositoryImpl(
                     listener.onThrowable(it)
                 }
             ).add()
-            topic("/chat/$chatId").subscribe {
-                listener.onMessage(it.payload)
-            }.add()
+            topic(destination).subscribe(
+                {
+                    listener.onMessage(Gson().fromJson(it.payload, ChatDto::class.java) as T)
+                },
+                {
+                    listener.onThrowable(it)
+                }
+            ).add()
         }
     }
 
@@ -47,7 +51,12 @@ class SocketRepositoryImpl(
     }
 
     override fun send(message: String) {
-        stompClient.send(message)
+        stompClient.send(message).subscribe(
+            {
+            },
+            {
+            }
+        ).add()
     }
 
     override fun isConnect(): Boolean = stompClient.isConnected

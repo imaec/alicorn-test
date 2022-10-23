@@ -7,6 +7,7 @@ data class ChatListResponseEntity(
 )
 
 data class ChatListEntity(
+    val chatId: String,
     val profile: String,
     val name: String,
     val time: String,
@@ -15,6 +16,7 @@ data class ChatListEntity(
 ) {
     companion object {
         fun toDto(entity: ChatListEntity) = ChatListDto(
+            chatId = entity.chatId,
             profile = entity.profile,
             name = entity.name,
             time = entity.time,

@@ -1,6 +1,7 @@
 package com.imaec.alicorntest.ui.chat
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -80,6 +81,9 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat) {
             when (it) {
                 ChatState.OnDataLoaded -> {
                     scrollToBottom()
+                }
+                is ChatState.ShowToast -> {
+                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }

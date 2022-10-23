@@ -3,6 +3,7 @@ package com.imaec.alicorntest.ui.main
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.imaec.alicorntest.BR
@@ -64,7 +65,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         viewModel.state.observe(this) {
             when (it) {
                 is MainState.OnClickChat -> {
-                    startActivity(Intent(this, ChatActivity::class.java))
+                    startActivity(
+                        Intent(this, ChatActivity::class.java),
+                        bundleOf("chatId" to it.item.chatId)
+                    )
                 }
             }
         }

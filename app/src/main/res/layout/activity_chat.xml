@@ -39,6 +39,7 @@
             android:background="@null"
             android:padding="16dp"
             android:hint="메세지 입력"
+            android:text="@={vm.message}"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/iv_send"
@@ -46,6 +47,7 @@
 
         <ImageView
             android:id="@+id/iv_send"
+            bindSingleClick="@{() -> vm.onClickSend()}"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="8dp"

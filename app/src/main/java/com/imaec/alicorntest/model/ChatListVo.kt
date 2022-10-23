@@ -3,6 +3,7 @@ package com.imaec.alicorntest.model
 import com.imaec.domain.model.ChatListDto
 
 data class ChatListVo(
+    val chatId: String,
     val profile: String,
     val name: String,
     val time: String,
@@ -11,6 +12,7 @@ data class ChatListVo(
 ) {
     companion object {
         fun dtoToVo(dto: ChatListDto) = ChatListVo(
+            chatId = dto.chatId,
             profile = dto.profile,
             name = dto.name,
             time = dto.time,

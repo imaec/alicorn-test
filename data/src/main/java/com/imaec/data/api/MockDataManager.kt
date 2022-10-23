@@ -32,6 +32,7 @@ object MockDataManager {
 
 val chatList = listOf(
     ChatListEntity(
+        chatId = "0",
         profile = "",
         name = "김이름",
         time = "오후 12:38",
@@ -39,6 +40,7 @@ val chatList = listOf(
         unread = 0
     ),
     ChatListEntity(
+        chatId = "1",
         profile = "",
         name = "김이름",
         time = "오후 12:38",
@@ -46,6 +48,7 @@ val chatList = listOf(
         unread = 0
     ),
     ChatListEntity(
+        chatId = "2",
         profile = "",
         name = "김이름",
         time = "오후 12:38",
@@ -53,6 +56,7 @@ val chatList = listOf(
         unread = 0
     ),
     ChatListEntity(
+        chatId = "3",
         profile = "",
         name = "김이름",
         time = "오후 12:38",
@@ -60,6 +64,7 @@ val chatList = listOf(
         unread = 0
     ),
     ChatListEntity(
+        chatId = "4",
         profile = "",
         name = "김이름",
         time = "오후 12:38",

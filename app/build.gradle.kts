@@ -86,6 +86,8 @@ dependencies {
     implementation(Libs.okhttp3)
     implementation(Libs.okhttp3_interceptor)
 
+    implementation(Libs.stomp)
+
     implementation(Libs.timber)
 }
 
