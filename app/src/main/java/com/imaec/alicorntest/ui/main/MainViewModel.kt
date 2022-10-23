@@ -11,6 +11,7 @@ import com.imaec.domain.repository.StompSocketListener
 import com.imaec.domain.successOr
 import com.imaec.domain.usecase.GetChatListUseCase
 import com.imaec.domain.usecase.IsLoginUseCase
+import com.imaec.domain.usecase.LogoutUseCase
 import com.imaec.domain.usecase.SocketUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val isLoginUseCase: IsLoginUseCase,
+    private val logoutUseCase: LogoutUseCase,
     private val getChatListUseCase: GetChatListUseCase,
     private val socketUseCase: SocketUseCase
 ) : ViewModel() {
@@ -82,6 +84,14 @@ class MainViewModel @Inject constructor(
             } else {
                 _state.value = MainState.StartLoginActivity
             }
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            logoutUseCase()
+            showToast("로그아웃 되었습니다.\n다시 로그인 해주세요.")
+            fetchData()
         }
     }
 

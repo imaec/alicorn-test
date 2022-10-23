@@ -29,6 +29,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         setupBinding()
         setupRecyclerView()
         setupData()
+        setupListener()
         setupObserver()
     }
 
@@ -62,6 +63,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private fun setupData() {
         viewModel.fetchData()
+    }
+
+    private fun setupListener() {
+        binding.mtbMain.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.menu_new -> {
+                    Toast.makeText(this, "new message", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.menu_logout -> {
+                    viewModel.logout()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun setupObserver() {
