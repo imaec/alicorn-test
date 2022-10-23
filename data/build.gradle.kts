@@ -50,6 +50,7 @@ dependencies {
 
     implementation(Libs.coroutine_core)
     implementation(Libs.coroutine_android)
+    implementation(Libs.rxjava)
 
     implementation(Libs.dagger_hilt_android)
     kapt(Libs.dagger_hilt_compiler)
@@ -60,6 +61,8 @@ dependencies {
     implementation(Libs.retrofit_converter)
     implementation(Libs.okhttp3)
     implementation(Libs.okhttp3_interceptor)
+
+    implementation(Libs.stomp)
 
     implementation(Libs.timber)
 }

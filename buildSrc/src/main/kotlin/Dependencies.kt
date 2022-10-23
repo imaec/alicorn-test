@@ -23,6 +23,7 @@ object Versions {
     const val lifecycle_extension = "2.2.0"
 
     const val coroutine = "1.5.2"
+    const val rxjava = "2.2.8"
 
     const val dagger_hilt = "2.38.1"
     const val hilt = "1.0.0"
@@ -33,6 +34,8 @@ object Versions {
     const val glide = "4.12.0"
 
     const val timber = "4.7.1"
+
+    const val stomp = "1.6.6"
 
     const val junit = "4.13.1"
     const val junit_ext = "1.1.1"
@@ -54,6 +57,8 @@ object Libs {
     // Coroutine
     const val coroutine_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine}"
     const val coroutine_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutine}"
+    // RxJava
+    const val rxjava = "io.reactivex.rxjava2:rxjava:${Versions.rxjava}"
     // Hilt
     const val dagger_hilt_android = "com.google.dagger:hilt-android:${Versions.dagger_hilt}"
     const val dagger_hilt_compiler = "com.google.dagger:hilt-android-compiler:${Versions.dagger_hilt}"
@@ -67,6 +72,8 @@ object Libs {
     // Glide
     const val glide_core = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val glide_compiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
+    // Stomp
+    const val stomp = "com.github.NaikSoftware:StompProtocolAndroid:${Versions.stomp}"
     // Timber
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 }

@@ -16,6 +16,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
+import ua.naiksoftware.stomp.Stomp
+import ua.naiksoftware.stomp.StompClient
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -93,4 +95,11 @@ object NetworkCoreModule {
     fun provideAlicornService(
         retrofitBuilder: Retrofit.Builder
     ): AlicornService = retrofitBuilder.build().create(AlicornService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideStompClient(): StompClient =
+        Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://api.com/chat/websocket").apply {
+            withClientHeartbeat(1000)
+        }
 }

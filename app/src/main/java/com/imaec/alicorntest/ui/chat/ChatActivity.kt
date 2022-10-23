@@ -87,11 +87,14 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat) {
 
     private fun scrollToBottom() {
         with(binding.rvChat) {
-            postDelayed({
-                adapter?.itemCount?.let { itemCount ->
-                    scrollToPosition(itemCount - 1)
-                }
-            }, 100)
+            postDelayed(
+                {
+                    adapter?.itemCount?.let { itemCount ->
+                        scrollToPosition(itemCount - 1)
+                    }
+                },
+                100
+            )
         }
     }
 }
