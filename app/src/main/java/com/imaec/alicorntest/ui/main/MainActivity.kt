@@ -3,6 +3,7 @@ package com.imaec.alicorntest.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DiffUtil
@@ -14,6 +15,7 @@ import com.imaec.alicorntest.base.BaseSingleViewAdapter
 import com.imaec.alicorntest.databinding.ActivityMainBinding
 import com.imaec.alicorntest.model.ChatListVo
 import com.imaec.alicorntest.ui.chat.ChatActivity
+import com.imaec.alicorntest.ui.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -71,6 +73,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                             putExtras(bundleOf("chatId" to it.item.chatId, "name" to it.item.name))
                         }
                     )
+                }
+                MainState.StartLoginActivity -> {
+                    activityResultRegistry.register(
+                        "LOGIN",
+                        ActivityResultContracts.StartActivityForResult()
+                    ) { result ->
+                        if (result.resultCode == RESULT_OK) {
+                            Toast.makeText(this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show()
+                            setupData()
+                        } else {
+                            onBackPressed()
+                        }
+                    }.launch(Intent(this, LoginActivity::class.java))
                 }
                 is MainState.ShowToast -> {
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()

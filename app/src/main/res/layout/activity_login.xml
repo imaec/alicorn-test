@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.imaec.alicorntest.ui.login.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mtb_login"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
+            app:title="로그인"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <EditText
+            android:id="@+id/et_id"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@={vm.id}"
+            android:hint="ID"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintEnd_toStartOf="@id/btn_login"
+            app:layout_constraintTop_toBottomOf="@id/mtb_login"/>
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="@={vm.password}"
+            android:hint="PASSWORD"
+            app:layout_constraintStart_toStartOf="@id/et_id"
+            app:layout_constraintEnd_toEndOf="@id/et_id"
+            app:layout_constraintTop_toBottomOf="@id/et_id"/>
+
+        <Button
+            android:id="@+id/btn_login"
+            bindSingleClick="@{() -> vm.onClickLogin()}"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:text="로그인"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintTop_toTopOf="@id/et_id"
+            app:layout_constraintBottom_toBottomOf="@id/et_password"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

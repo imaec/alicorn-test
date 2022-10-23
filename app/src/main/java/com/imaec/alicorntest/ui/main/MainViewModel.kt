@@ -11,18 +11,14 @@ import com.imaec.domain.repository.StompSocketListener
 import com.imaec.domain.successOr
 import com.imaec.domain.usecase.GetChatListUseCase
 import com.imaec.domain.usecase.IsLoginUseCase
-import com.imaec.domain.usecase.LoginParams
-import com.imaec.domain.usecase.LoginUseCase
 import com.imaec.domain.usecase.SocketUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase,
     private val isLoginUseCase: IsLoginUseCase,
     private val getChatListUseCase: GetChatListUseCase,
     private val socketUseCase: SocketUseCase
@@ -48,10 +44,7 @@ class MainViewModel @Inject constructor(
 
     fun fetchData() {
         viewModelScope.launch {
-            val result = loginUseCase(LoginParams("lee", "1234")).successOr(false)
-            Timber.i("  ## result : $result")
-            val isLogin = isLoginUseCase().successOr(false)
-            if (isLogin) {
+            if (isLoginUseCase().successOr(false)) {
                 setChatList(getChatListUseCase("0").successOr(emptyList()).map(::dtoToVo))
                 socketUseCase.connect(
                     "/chat/list/0",
@@ -87,7 +80,7 @@ class MainViewModel @Inject constructor(
                     }
                 )
             } else {
-                // 로그인 화면 노출
+                _state.value = MainState.StartLoginActivity
             }
         }
     }
