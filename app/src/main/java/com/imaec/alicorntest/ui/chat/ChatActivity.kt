@@ -68,6 +68,9 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat) {
     }
 
     private fun setupListener() {
+        binding.mtbChat.setNavigationOnClickListener {
+            onBackPressed()
+        }
         keyboardVisibilityUtils = KeyboardVisibilityUtils(
             window,
             onShowKeyboard = {

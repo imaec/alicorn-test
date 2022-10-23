@@ -30,6 +30,9 @@ class ChatViewModel @Inject constructor(
     private val _state = MutableLiveData<ChatState>()
     val state: LiveData<ChatState> get() = _state
 
+    private val _title = MutableLiveData(savedStateHandle.get<String>("name") ?: "")
+    val title: LiveData<String> get() = _title
+
     private val _chatList = MutableLiveData<List<ChatVo>>()
     val chatList: LiveData<List<ChatVo>> get() = _chatList
 
