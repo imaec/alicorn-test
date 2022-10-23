@@ -78,14 +78,20 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat) {
     private fun setupObserver() {
         viewModel.state.observe(this) {
             when (it) {
-                ChatState.OnDataLoaded -> scrollToBottom()
+                ChatState.OnDataLoaded -> {
+                    scrollToBottom()
+                }
             }
         }
     }
 
     private fun scrollToBottom() {
-        binding.rvChat.adapter?.itemCount?.let { itemCount ->
-            binding.rvChat.scrollToPosition(itemCount - 1)
+        with(binding.rvChat) {
+            postDelayed({
+                adapter?.itemCount?.let { itemCount ->
+                    scrollToPosition(itemCount - 1)
+                }
+            }, 100)
         }
     }
 }
