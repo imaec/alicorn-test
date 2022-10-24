@@ -5,6 +5,8 @@ import android.accounts.AccountManager
 import android.os.Build
 import com.imaec.data.api.AlicornMemberService
 import com.imaec.data.api.body.LoginBody
+import com.imaec.data.entity.ConnectedPeopleEntity.Companion.toDto
+import com.imaec.domain.model.ConnectedPeopleDto
 import com.imaec.domain.model.MemberInfoDto
 import com.imaec.domain.repository.MemberRepository
 import java.lang.Exception
@@ -67,6 +69,12 @@ class MemberRepositoryImpl(
             accountManager.removeAccount(account, null, null)
         }
     }
+
+    override suspend fun searchConnectedPeopleList(
+        uid: String,
+        keyword: String
+    ): List<ConnectedPeopleDto> =
+        service.searchConnectedPeopleList(uid, keyword).connectedPeopleList.map(::toDto)
 
     companion object {
         private const val ACCOUNT_TYPE = "com.imaec.alicorntest.auth"

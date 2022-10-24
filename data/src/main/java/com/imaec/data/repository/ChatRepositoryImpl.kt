@@ -18,4 +18,7 @@ class ChatRepositoryImpl(
 
     override suspend fun getChat(chatId: String): List<ChatDto> =
         service.getChat(ChatBody(chatId)).chat.map(ChatEntity::toDto)
+
+    override suspend fun getChatId(uid1: String, uid2: String): String =
+        service.getChatId(uid1, uid2).chatId
 }

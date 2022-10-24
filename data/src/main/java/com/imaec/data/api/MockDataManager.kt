@@ -3,9 +3,12 @@ package com.imaec.data.api
 import com.google.gson.Gson
 import com.imaec.data.api.body.LoginBody
 import com.imaec.data.entity.ChatEntity
+import com.imaec.data.entity.ChatIdEntity
 import com.imaec.data.entity.ChatListEntity
 import com.imaec.data.entity.ChatListResponseEntity
 import com.imaec.data.entity.ChatResponseEntity
+import com.imaec.data.entity.ConnectedPeopleEntity
+import com.imaec.data.entity.ConnectedPeopleResponseEntity
 import com.imaec.data.entity.LoginEntity
 import okhttp3.Interceptor
 import okhttp3.Protocol
@@ -19,7 +22,12 @@ object MockDataManager {
         return when (chain.request().url.encodedPath) {
             "/fake/chat/list" -> getResponse(chain, Gson().toJson(ChatListResponseEntity(chatList)))
             "/fake/chat" -> getResponse(chain, Gson().toJson(ChatResponseEntity(chat)))
+            "/fake/chat/id" -> getResponse(chain, Gson().toJson(ChatIdEntity("123")))
             "/fake/member/login" -> fakeLogin(chain)
+            "/fake/member/connected/search" -> getResponse(
+                chain,
+                Gson().toJson(ConnectedPeopleResponseEntity(peoples.shuffled().take(5)))
+            )
             else -> chain.proceed(chain.request())
         }
     }
@@ -164,5 +172,43 @@ val chat = listOf(
         message = "아 죄송해요, 이제야 메세지를 봤습니다. 저도 반가웠습니다! 어떤 부탁인가요? https://www.naver.com/",
         time = "오전 11:27",
         isMy = true
+    )
+)
+
+val peoples = listOf(
+    ConnectedPeopleEntity(
+        uid = "10",
+        profile = "",
+        name = "김하나"
+    ),
+    ConnectedPeopleEntity(
+        uid = "14",
+        profile = "",
+        name = "이두리"
+    ),
+    ConnectedPeopleEntity(
+        uid = "20",
+        profile = "",
+        name = "박세시"
+    ),
+    ConnectedPeopleEntity(
+        uid = "13",
+        profile = "",
+        name = "강네시"
+    ),
+    ConnectedPeopleEntity(
+        uid = "11",
+        profile = "",
+        name = "오다섯"
+    ),
+    ConnectedPeopleEntity(
+        uid = "5",
+        profile = "",
+        name = "육여섯"
+    ),
+    ConnectedPeopleEntity(
+        uid = "9",
+        profile = "",
+        name = "안일곱"
     )
 )

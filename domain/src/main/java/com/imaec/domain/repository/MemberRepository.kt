@@ -1,6 +1,7 @@
 package com.imaec.domain.repository
 
 import android.accounts.Account
+import com.imaec.domain.model.ConnectedPeopleDto
 import com.imaec.domain.model.MemberInfoDto
 
 interface MemberRepository {
@@ -12,4 +13,6 @@ interface MemberRepository {
     suspend fun login(id: String, password: String): Boolean
 
     suspend fun logout()
+
+    suspend fun searchConnectedPeopleList(uid: String, keyword: String): List<ConnectedPeopleDto>
 }

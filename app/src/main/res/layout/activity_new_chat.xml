@@ -41,6 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
+            android:imeOptions="actionSearch"
             android:text="@={vm.receiver}"
             android:hint="받는 사람"
             app:layout_constraintStart_toStartOf="@id/guide_start"

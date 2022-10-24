@@ -1,7 +1,9 @@
 package com.imaec.alicorntest.ui.newchat
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.imaec.alicorntest.BR
@@ -9,6 +11,8 @@ import com.imaec.alicorntest.R
 import com.imaec.alicorntest.base.BaseActivity
 import com.imaec.alicorntest.base.BaseSingleViewAdapter
 import com.imaec.alicorntest.databinding.ActivityNewChatBinding
+import com.imaec.alicorntest.model.ConnectedPeopleVo
+import com.imaec.alicorntest.ui.chat.ChatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,8 +25,8 @@ class NewChatActivity : BaseActivity<ActivityNewChatBinding>(R.layout.activity_n
 
         setupBinding()
         setupRecyclerView()
-        setupData()
         setupListener()
+        setupObserver()
     }
 
     private fun setupBinding() {
@@ -31,15 +35,15 @@ class NewChatActivity : BaseActivity<ActivityNewChatBinding>(R.layout.activity_n
 
     private fun setupRecyclerView() {
         with(binding.rvConnectedPeople) {
-            val diffUtil = object : DiffUtil.ItemCallback<String>() {
+            val diffUtil = object : DiffUtil.ItemCallback<ConnectedPeopleVo>() {
                 override fun areItemsTheSame(
-                    oldItem: String,
-                    newItem: String
+                    oldItem: ConnectedPeopleVo,
+                    newItem: ConnectedPeopleVo
                 ): Boolean = oldItem == newItem
 
                 override fun areContentsTheSame(
-                    oldItem: String,
-                    newItem: String
+                    oldItem: ConnectedPeopleVo,
+                    newItem: ConnectedPeopleVo
                 ): Boolean = oldItem == newItem
             }
 
@@ -57,13 +61,23 @@ class NewChatActivity : BaseActivity<ActivityNewChatBinding>(R.layout.activity_n
         }
     }
 
-    private fun setupData() {
-        viewModel.fetchData()
-    }
-
     private fun setupListener() {
         binding.mtbNewChat.setNavigationOnClickListener {
             onBackPressed()
+        }
+    }
+
+    private fun setupObserver() {
+        viewModel.state.observe(this) {
+            when (it) {
+                is NewChatState.OnClickPeople -> {
+                    startActivity(
+                        Intent(this, ChatActivity::class.java).apply {
+                            putExtras(bundleOf("chatId" to it.chatId, "name" to it.item.name))
+                        }
+                    )
+                }
+            }
         }
     }
 }
