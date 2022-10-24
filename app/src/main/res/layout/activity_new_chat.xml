@@ -41,6 +41,8 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
+            android:maxLines="1"
+            android:inputType="text"
             android:imeOptions="actionSearch"
             android:text="@={vm.receiver}"
             android:hint="받는 사람"
