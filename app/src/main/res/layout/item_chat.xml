@@ -13,6 +13,7 @@
             name="item"
             type="com.imaec.alicorntest.model.ChatVo" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,19 +30,25 @@
             android:autoLink="web"
             android:text="@{item.message}"
             android:textColor="@color/black"
-            app:layout_constraintWidth_max="250dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_receive_time"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_bias="0"
             tools:text="12312"/>
 
         <TextView
+            android:id="@+id/tv_receive_time"
             bindVisible="@{!item.my}"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="50dp"
             android:layout_marginBottom="8dp"
             android:text="@{item.time}"
             app:layout_constraintStart_toEndOf="@id/tv_receive"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/tv_receive"
             tools:text="오전 10:23"/>
 
@@ -56,20 +63,26 @@
             android:autoLink="web"
             android:text="@{item.message}"
             android:textColor="@color/white"
-            app:layout_constraintWidth_max="250dp"
+            app:layout_constraintStart_toEndOf="@id/tv_my_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constrainedWidth="true"
             tools:text="12312"/>
 
         <TextView
+            android:id="@+id/tv_my_time"
             bindVisible="@{item.my}"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@{item.time}"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_my"
             app:layout_constraintBottom_toBottomOf="@id/tv_my"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="1"
             tools:text="오전 10:23"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
